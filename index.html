@@ -30,7 +30,6 @@
       overflow-x:hidden;
     }
 
-    /* floating hearts */
     .floaties{
       position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0;
       filter: blur(.2px);
@@ -122,7 +121,6 @@
       position:relative;
     }
 
-    /* Bigger photo grid */
     .grid{
       display:grid;
       grid-template-columns: repeat(2, 1fr);
@@ -130,7 +128,6 @@
       padding: 12px;
     }
 
-    /* Tiles that NEVER crop images */
     .tile{
       height: 180px;
       border-radius: 18px;
@@ -151,14 +148,13 @@
       width:100%;
       height:100%;
       display:block;
-      object-fit: contain;          /* no cropping */
-      background: rgba(0,0,0,.18);  /* soft letterbox */
+      object-fit: contain;
+      background: rgba(0,0,0,.18);
       transition: transform .35s ease, opacity .2s ease;
       opacity: .98;
     }
     .tile:hover img{ transform: scale(1.01); }
 
-    /* right side content */
     .right{
       padding: 18px;
       display:flex;
@@ -185,7 +181,6 @@
       background: rgba(0,0,0,.18);
     }
 
-    /* Video frame that NEVER crops */
     .videoFrame{
       width:100%;
       aspect-ratio: 16 / 9;
@@ -200,7 +195,7 @@
       width:100%;
       height:100%;
       display:block;
-      object-fit: contain;     /* no cropping */
+      object-fit: contain;
       background: rgba(0,0,0,.22);
     }
 
@@ -247,7 +242,6 @@
       border-color: rgba(255,90,149,.70);
     }
 
-    /* lightbox */
     .lightbox{
       position:fixed; inset:0;
       background: rgba(0,0,0,.72);
@@ -273,7 +267,7 @@
       height:auto;
       display:block;
       max-height: 80vh;
-      object-fit: contain;     /* no cropping */
+      object-fit: contain;
       background: rgba(0,0,0,.25);
     }
     .lbBar{
@@ -294,10 +288,8 @@
       cursor:pointer;
     }
 
-    /* playful "No" movement */
     .noBtn{ position:relative; }
 
-    /* confetti sparkles */
     .spark{
       position:fixed;
       width:6px; height:6px;
@@ -332,21 +324,19 @@
       </div>
 
       <section class="hero">
-        <!-- Photos -->
         <div class="panel">
           <div class="grid" id="photoGrid">
-            <button class="tile" data-src="assets/photos/1.jpg" aria-label="Photo 1"><img src="assets/photos/1.jpg" alt="Photo 1" loading="lazy"></button>
-            <button class="tile" data-src="assets/photos/2.jpg" aria-label="Photo 2"><img src="assets/photos/2.jpg" alt="Photo 2" loading="lazy"></button>
-            <button class="tile" data-src="assets/photos/3.jpg" aria-label="Photo 3"><img src="assets/photos/3.jpg" alt="Photo 3" loading="lazy"></button>
-            <button class="tile" data-src="assets/photos/4.jpg" aria-label="Photo 4"><img src="assets/photos/4.jpg" alt="Photo 4" loading="lazy"></button>
-            <button class="tile" data-src="assets/photos/5.jpg" aria-label="Photo 5"><img src="assets/photos/5.jpg" alt="Photo 5" loading="lazy"></button>
-            <button class="tile" data-src="assets/photos/6.jpg" aria-label="Photo 6"><img src="assets/photos/6.jpg" alt="Photo 6" loading="lazy"></button>
-            <button class="tile" data-src="assets/photos/7.jpg" aria-label="Photo 7"><img src="assets/photos/7.jpg" alt="Photo 7" loading="lazy"></button>
-            <button class="tile" data-src="assets/photos/8.jpg" aria-label="Photo 8"><img src="assets/photos/8.jpg" alt="Photo 8" loading="lazy"></button>
+            <button class="tile" data-src="assets/photos/1.jpeg" aria-label="Photo 1"><img src="assets/photos/1.jpeg" alt="Photo 1" loading="lazy"></button>
+            <button class="tile" data-src="assets/photos/2.jpeg" aria-label="Photo 2"><img src="assets/photos/2.jpeg" alt="Photo 2" loading="lazy"></button>
+            <button class="tile" data-src="assets/photos/3.jpeg" aria-label="Photo 3"><img src="assets/photos/3.jpeg" alt="Photo 3" loading="lazy"></button>
+            <button class="tile" data-src="assets/photos/4.jpeg" aria-label="Photo 4"><img src="assets/photos/4.jpeg" alt="Photo 4" loading="lazy"></button>
+            <button class="tile" data-src="assets/photos/5.jpeg" aria-label="Photo 5"><img src="assets/photos/5.jpeg" alt="Photo 5" loading="lazy"></button>
+            <button class="tile" data-src="assets/photos/6.jpeg" aria-label="Photo 6"><img src="assets/photos/6.jpeg" alt="Photo 6" loading="lazy"></button>
+            <button class="tile" data-src="assets/photos/7.jpeg" aria-label="Photo 7"><img src="assets/photos/7.jpeg" alt="Photo 7" loading="lazy"></button>
+            <button class="tile" data-src="assets/photos/8.jpeg" aria-label="Photo 8"><img src="assets/photos/8.jpeg" alt="Photo 8" loading="lazy"></button>
           </div>
         </div>
 
-        <!-- Video + CTA -->
         <div class="panel right">
           <p class="quote" id="quote">
             “Love is not found in perfect moments — it’s built in the small ones, until your heart quietly chooses a home.”
@@ -354,7 +344,6 @@
 
           <div class="videoWrap">
             <div class="videoFrame">
-              <!-- ✅ muted by default -->
               <video id="valVideo" controls playsinline preload="metadata" muted>
                 <source src="assets/video.mp4" type="video/mp4">
                 Your browser doesn’t support video.
@@ -362,7 +351,6 @@
             </div>
           </div>
 
-          <!-- ✅ MUSIC autoplays (upload as assets/music.mp3) -->
           <audio id="bgMusic" preload="auto" loop>
             <source src="assets/music.mp3" type="audio/mpeg">
           </audio>
@@ -376,7 +364,6 @@
     </main>
   </div>
 
-  <!-- Lightbox -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
     <div class="lightboxInner">
       <div class="lbBar">
@@ -392,12 +379,8 @@
   </div>
 
   <script>
-    // ====== CONFIG ======
     const FROM_NAME = "Umer";
     const TO_NAME = "Sidra";
-
-    // Put your WhatsApp number here in international format, no +, no spaces.
-    // Example Pakistan: 92XXXXXXXXXX
     const WHATSAPP_NUMBER = "923007913469";
 
     const YES_MESSAGE =
@@ -408,11 +391,9 @@
 
     function openWhatsApp(message){
       const text = encodeURIComponent(message);
-      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
-      window.location.href = url;
+      window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
     }
 
-    // ====== Sparkles ======
     function spark(x, y){
       for(let i=0;i<18;i++){
         const s = document.createElement("div");
@@ -430,7 +411,6 @@
       }
     }
 
-    // ====== Buttons ======
     const yesBtn = document.getElementById("yesBtn");
     const noBtn  = document.getElementById("noBtn");
     const ctaArea = document.getElementById("ctaArea");
@@ -442,7 +422,6 @@
       setTimeout(() => openWhatsApp(YES_MESSAGE), 450);
     });
 
-    // Playful "No" that dodges a little on hover/tap
     let noMoves = 0;
     function moveNoButton(){
       const area = ctaArea.getBoundingClientRect();
@@ -484,7 +463,6 @@
       setTimeout(() => openWhatsApp(NO_MESSAGE), 450);
     });
 
-    // ====== Lightbox for photos ======
     const tiles = Array.from(document.querySelectorAll(".tile"));
     const lightbox = document.getElementById("lightbox");
     const lbImg = document.getElementById("lbImg");
@@ -527,7 +505,6 @@
       if (e.key === "ArrowRight") showNext(1);
     });
 
-    // ====== Floating hearts ======
     const floaties = document.getElementById("floaties");
     const emojis = ["💘","💖","✨","💞","🌙","⭐","🫶"];
     for(let i=0;i<18;i++){
@@ -540,9 +517,7 @@
       floaties.appendChild(s);
     }
 
-    // ====== Music autoplay ======
-    // NOTE: Most browsers block autoplay with sound until the user interacts.
-    // We try on load, and if blocked, we start on the first click/tap anywhere.
+    // Autoplay music (will start after first tap if browser blocks)
     const bgMusic = document.getElementById("bgMusic");
 
     async function tryPlayMusic(){
@@ -550,9 +525,7 @@
       try {
         bgMusic.volume = 0.75;
         await bgMusic.play();
-      } catch (_) {
-        // Will start after first interaction.
-      }
+      } catch (_) {}
     }
 
     window.addEventListener("load", tryPlayMusic, { once:true });

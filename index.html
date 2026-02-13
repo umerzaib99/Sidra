@@ -9,7 +9,6 @@
   <style>
     :root{
       --bg:#0b0b0f;
-      --card:rgba(255,255,255,.06);
       --stroke:rgba(255,255,255,.14);
       --text:rgba(255,255,255,.92);
       --muted:rgba(255,255,255,.68);
@@ -23,15 +22,15 @@
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.10), transparent 60%),
-                  radial-gradient(900px 700px at 85% 30%, rgba(255,255,255,.08), transparent 55%),
-                  radial-gradient(800px 700px at 50% 95%, rgba(255,255,255,.06), transparent 55%),
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(255,90,149,.16), transparent 60%),
+                  radial-gradient(900px 700px at 85% 30%, rgba(140,110,255,.15), transparent 55%),
+                  radial-gradient(800px 700px at 50% 95%, rgba(70,255,213,.10), transparent 55%),
                   var(--bg);
       color:var(--text);
       overflow-x:hidden;
     }
 
-    /* floating hearts (subtle) */
+    /* floating hearts */
     .floaties{
       position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0;
       filter: blur(.2px);
@@ -39,7 +38,6 @@
     }
     .floaties span{
       position:absolute;
-      font-size: 16px;
       animation: drift linear infinite;
       opacity:.8;
       transform: translateY(110vh);
@@ -124,34 +122,41 @@
       position:relative;
     }
 
-    /* photo grid (BIGGER) */
+    /* Bigger photo grid */
     .grid{
       display:grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
       padding: 12px;
     }
-    @media (max-width: 900px){
-      .grid{ grid-template-columns: repeat(2, 1fr); }
-    }
+
+    /* Tiles that NEVER crop images */
     .tile{
-      aspect-ratio: 4 / 3;
+      height: 180px;
       border-radius: 18px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.06);
       cursor:pointer;
       position:relative;
-      transform: translateZ(0);
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
+    @media (max-width: 520px){
+      .tile{ height: 150px; }
+    }
+
     .tile img{
       width:100%;
       height:100%;
-      object-fit:cover;
       display:block;
-      transition: transform .35s ease;
+      object-fit: contain;          /* no cropping */
+      background: rgba(0,0,0,.18);  /* soft letterbox */
+      transition: transform .35s ease, opacity .2s ease;
+      opacity: .98;
     }
-    .tile:hover img{ transform: scale(1.05); }
+    .tile:hover img{ transform: scale(1.01); }
 
     /* right side content */
     .right{
@@ -170,29 +175,33 @@
       color: rgba(255,255,255,.86);
       background: rgba(255,255,255,.03);
       line-height:1.55;
+      font-size: 15px;
     }
 
     .videoWrap{
       border-radius: 18px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.2);
+      background: rgba(0,0,0,.18);
     }
 
-    /* HORIZONTAL VIDEO FRAME (16:9) */
+    /* Video frame that NEVER crops */
     .videoFrame{
       width:100%;
       aspect-ratio: 16 / 9;
+      background: rgba(0,0,0,.22);
+      display:flex;
+      align-items:center;
+      justify-content:center;
       overflow:hidden;
-      border-radius: 18px;
-      background: rgba(0,0,0,.25);
     }
+
     .videoFrame video{
       width:100%;
       height:100%;
       display:block;
-      object-fit: cover;   /* crops vertical video into horizontal frame */
-      object-position: center;
+      object-fit: contain;     /* no cropping */
+      background: rgba(0,0,0,.22);
     }
 
     .cta{
@@ -230,31 +239,12 @@
     .btn:active{ transform: translateY(0px) scale(.99); }
 
     .btnPrimary{
-      border-color: rgba(255,255,255,.40);
-      background: rgba(255,255,255,.14);
+      border-color: rgba(255,90,149,.55);
+      background: rgba(255,90,149,.16);
     }
     .btnPrimary:hover{
-      background: rgba(255,255,255,.20);
-      border-color: rgba(255,255,255,.55);
-    }
-
-    .tiny{
-      margin: 10px 0 0;
-      color: rgba(255,255,255,.58);
-      font-size: 12.5px;
-      line-height:1.5;
-    }
-
-    /* MUSIC ROW */
-    .musicRow{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .vol{
-      width: 160px;
-      accent-color: rgba(255,255,255,.75);
+      background: rgba(255,90,149,.22);
+      border-color: rgba(255,90,149,.70);
     }
 
     /* lightbox */
@@ -283,7 +273,7 @@
       height:auto;
       display:block;
       max-height: 80vh;
-      object-fit: contain;
+      object-fit: contain;     /* no cropping */
       background: rgba(0,0,0,.25);
     }
     .lbBar{
@@ -305,11 +295,9 @@
     }
 
     /* playful "No" movement */
-    .noBtn{
-      position:relative;
-    }
+    .noBtn{ position:relative; }
 
-    /* little confetti sparkles */
+    /* confetti sparkles */
     .spark{
       position:fixed;
       width:6px; height:6px;
@@ -336,8 +324,7 @@
           <div class="badge">💌 A tiny question from <strong style="color:rgba(255,255,255,.92); font-weight:650;">Umer</strong></div>
           <h1>Sidra, will you be my Valentine? 💘</h1>
           <p class="sub">
-            I made this little page because you deserve something sweet, simple, and a bit silly.
-            Please choose carefully… my heart is doing backflips.
+            I made this little page because you deserve something sweet, simple, and a bit dramatic.
           </p>
         </div>
 
@@ -348,7 +335,6 @@
         <!-- Photos -->
         <div class="panel">
           <div class="grid" id="photoGrid">
-            <!-- Update filenames if needed -->
             <button class="tile" data-src="assets/photos/1.jpg" aria-label="Photo 1"><img src="assets/photos/1.jpg" alt="Photo 1" loading="lazy"></button>
             <button class="tile" data-src="assets/photos/2.jpg" aria-label="Photo 2"><img src="assets/photos/2.jpg" alt="Photo 2" loading="lazy"></button>
             <button class="tile" data-src="assets/photos/3.jpg" aria-label="Photo 3"><img src="assets/photos/3.jpg" alt="Photo 3" loading="lazy"></button>
@@ -363,35 +349,28 @@
         <!-- Video + CTA -->
         <div class="panel right">
           <p class="quote" id="quote">
-            “If you say yes, I’ll plan something cute. If you say no… I’ll still bring you snacks.”
+            “Love is not found in perfect moments — it’s built in the small ones, until your heart quietly chooses a home.”
           </p>
 
           <div class="videoWrap">
             <div class="videoFrame">
-              <video id="valVideo" controls playsinline preload="metadata">
+              <!-- ✅ muted by default -->
+              <video id="valVideo" controls playsinline preload="metadata" muted>
                 <source src="assets/video.mp4" type="video/mp4">
                 Your browser doesn’t support video.
               </video>
             </div>
           </div>
 
-          <!-- MUSIC (upload as assets/music.mp3) -->
-          <div class="musicRow">
-            <button class="btn" id="musicBtn" type="button">Play music ♪</button>
-            <input id="musicVol" class="vol" type="range" min="0" max="1" step="0.01" value="0.75" aria-label="Music volume">
-            <audio id="bgMusic" preload="metadata">
-              <source src="assets/music.mp3" type="audio/mpeg">
-            </audio>
-          </div>
+          <!-- ✅ MUSIC autoplays (upload as assets/music.mp3) -->
+          <audio id="bgMusic" preload="auto" loop>
+            <source src="assets/music.mp3" type="audio/mpeg">
+          </audio>
 
           <div class="cta" id="ctaArea">
             <button class="btn btnPrimary" id="yesBtn">Yes 💘</button>
             <button class="btn noBtn" id="noBtn">No 🙈</button>
           </div>
-
-          <p class="tiny">
-            Tip: If WhatsApp doesn’t open, you may need WhatsApp installed (mobile) or WhatsApp Web (desktop).
-          </p>
         </div>
       </section>
     </main>
@@ -422,12 +401,11 @@
     const WHATSAPP_NUMBER = "923007913469";
 
     const YES_MESSAGE =
-      `Hey ${TO_NAME} 💘\n\nIt's ${FROM_NAME}.\nI’m so happy you said YES! 🥺✨\nCan I plan our Valentine’s date? 🌹`;
+      `Hey ${TO_NAME} 💘\n\nIt's ${FROM_NAME}.\nYou just made my whole day.\nCan’t wait to celebrate Valentine’s with you. 🌹✨`;
 
     const NO_MESSAGE =
-      `Hey ${TO_NAME} 🙈\n\nIt's ${FROM_NAME}.\nYou said no… but I still think you’re my favorite person. 😄\nCan I try again with snacks? 🍫`;
+      `Hey ${TO_NAME} 🙈\n\nIt's ${FROM_NAME}.\nI’ll accept the no… but I still had to tell you:\nYou’re special to me. Always. 🤍`;
 
-    // ====== WhatsApp helper ======
     function openWhatsApp(message){
       const text = encodeURIComponent(message);
       const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
@@ -460,7 +438,7 @@
 
     yesBtn.addEventListener("click", (e) => {
       spark(e.clientX, e.clientY);
-      quote.textContent = "OKAYYYY 😭💘 I’ll start planning. Don’t move.";
+      quote.textContent = "You said YES… and my heart just did a little victory lap. 💘";
       setTimeout(() => openWhatsApp(YES_MESSAGE), 450);
     });
 
@@ -490,21 +468,19 @@
       }
     }
 
-    // Desktop hover
     noBtn.addEventListener("mouseenter", () => moveNoButton());
 
-    // Mobile: first tap dodges, second tap sends "no"
     let tappedOnce = false;
     noBtn.addEventListener("click", (e) => {
       if (!tappedOnce){
         tappedOnce = true;
         moveNoButton();
-        quote.textContent = "No? 😳 Wait— come back here for a second…";
+        quote.textContent = "No? 😳 Wait— just… one more second.";
         setTimeout(() => tappedOnce = false, 1100);
         return;
       }
       spark(e.clientX, e.clientY);
-      quote.textContent = "Respectfully noted 🙈 (I’ll still spoil you a little.)";
+      quote.textContent = "Ouch. Dramatic pause. Still… you’re my favorite. 🤍";
       setTimeout(() => openWhatsApp(NO_MESSAGE), 450);
     });
 
@@ -564,36 +540,30 @@
       floaties.appendChild(s);
     }
 
-    // ====== Music ======
+    // ====== Music autoplay ======
+    // NOTE: Most browsers block autoplay with sound until the user interacts.
+    // We try on load, and if blocked, we start on the first click/tap anywhere.
     const bgMusic = document.getElementById("bgMusic");
-    const musicBtn = document.getElementById("musicBtn");
-    const musicVol = document.getElementById("musicVol");
 
-    if (bgMusic && musicVol && musicBtn) {
-      bgMusic.volume = parseFloat(musicVol.value || "0.75");
-      musicVol.addEventListener("input", () => {
-        bgMusic.volume = parseFloat(musicVol.value);
-      });
-
-      let playing = false;
-      musicBtn.addEventListener("click", async () => {
-        try {
-          if (!playing) {
-            await bgMusic.play();
-            playing = true;
-            musicBtn.textContent = "Pause music ♪";
-          } else {
-            bgMusic.pause();
-            playing = false;
-            musicBtn.textContent = "Play music ♪";
-          }
-        } catch (e) {
-          playing = false;
-          musicBtn.textContent = "Play music ♪";
-          alert("Tap again to allow music to play.");
-        }
-      });
+    async function tryPlayMusic(){
+      if (!bgMusic) return;
+      try {
+        bgMusic.volume = 0.75;
+        await bgMusic.play();
+      } catch (_) {
+        // Will start after first interaction.
+      }
     }
+
+    window.addEventListener("load", tryPlayMusic, { once:true });
+
+    function startMusicOnFirstTap(){
+      tryPlayMusic();
+      window.removeEventListener("pointerdown", startMusicOnFirstTap);
+      window.removeEventListener("keydown", startMusicOnFirstTap);
+    }
+    window.addEventListener("pointerdown", startMusicOnFirstTap);
+    window.addEventListener("keydown", startMusicOnFirstTap);
   </script>
 </body>
 </html>
